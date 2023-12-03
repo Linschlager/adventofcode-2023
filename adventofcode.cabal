@@ -1,0 +1,52 @@
+cabal-version:      3.4
+name:               adventofcode
+version:            0.2.0.0
+license:            Apache-2.0
+license-file:       LICENCE
+author:             Linus Vettiger
+maintainer:         linus4123@gmail.com
+category:           System
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+
+common common
+    default-language: GHC2021
+    ghc-options:
+        -Weverything
+        -Wno-unsafe
+        -Wno-missing-safe-haskell-mode
+        -Wno-missing-export-lists
+        -Wno-missing-import-lists
+        -Wno-missing-kind-signatures
+        -Wno-all-missed-specialisations
+    default-extensions:
+        ApplicativeDo
+        Arrows
+        BlockArguments
+        DataKinds
+        DefaultSignatures
+        DeriveAnyClass
+        DeriveGeneric
+        DerivingStrategies
+        DerivingVia
+        ExplicitNamespaces
+        LambdaCase
+        NoFieldSelectors
+        NoImplicitPrelude
+        OverloadedLabels
+        OverloadedRecordDot
+        OverloadedStrings
+        RecordWildCards
+        RecursiveDo
+        TypeFamilies
+        ViewPatterns
+
+executable adventofcode
+    import:           common
+    main-is:          Main.hs
+    other-modules:
+        Internal.Prelude,
+        AdventOfCode.Day1,
+    build-depends:
+        base,
+    hs-source-dirs:   src
