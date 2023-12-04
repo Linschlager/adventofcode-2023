@@ -3,8 +3,6 @@
 module AdventOfCode.Day1 where
 
 import Internal.Prelude
-import Data.Maybe
-import Data.List (isPrefixOf, isSuffixOf)
 
 data Direction = FromLeft | FromRight
 

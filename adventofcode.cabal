@@ -47,6 +47,8 @@ executable adventofcode
     other-modules:
         Internal.Prelude,
         AdventOfCode.Day1,
+        AdventOfCode.Day2,
     build-depends:
         base,
+        split,
     hs-source-dirs:   src
