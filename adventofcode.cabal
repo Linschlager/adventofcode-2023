@@ -48,7 +48,10 @@ executable adventofcode
         Internal.Prelude,
         AdventOfCode.Day1,
         AdventOfCode.Day2,
+        AdventOfCode.Day3,
     build-depends:
         base,
         split,
+        text,
+        containers,
     hs-source-dirs:   src
