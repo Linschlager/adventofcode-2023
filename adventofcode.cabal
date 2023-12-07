@@ -52,6 +52,5 @@ executable adventofcode
     build-depends:
         base,
         split,
-        text,
         containers,
     hs-source-dirs:   src
