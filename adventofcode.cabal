@@ -49,6 +49,7 @@ executable adventofcode
         AdventOfCode.Day1,
         AdventOfCode.Day2,
         AdventOfCode.Day3,
+        AdventOfCode.Day4,
     build-depends:
         base,
         split,
