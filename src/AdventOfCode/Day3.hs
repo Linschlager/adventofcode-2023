@@ -5,6 +5,7 @@ module AdventOfCode.Day3 where
 import Data.Char
 import Data.Map.Strict hiding (filter, mapMaybe, null)
 import Debug.Trace
+import GHC.Exts (groupWith)
 import Internal.Prelude
 
 type Pos = (Int, Int)
@@ -40,14 +41,13 @@ parseInputToMap input = unions $ parseLineToMap <$> zip [0 ..] input
 
 surroundings :: CharGrid -> Pos -> [PositionedChar]
 surroundings charGrid (posX, posY) = do
-    let positions =[(posX, posY - 1), (posX, posY + 1)]
+    let positions = [(posX, posY - 1), (posX, posY + 1)]
     mapMaybe (\pos -> addFst pos <$> charGrid !? pos) positions
 
 fullSurroundings :: CharGrid -> Pos -> [PositionedChar]
 fullSurroundings charGrid (posX, posY) = do
     let positions = [(posX, posY - 1), (posX, posY), (posX, posY + 1)]
     mapMaybe (\pos -> addFst pos <$> charGrid !? pos) positions
-
 
 parseNumber :: CharGrid -> Maybe Pos -> [Pos] -> [Number]
 parseNumber charGrid prevPos remainingPositions = do
@@ -88,32 +88,22 @@ sumOfParts (first : rest) = do
         then first.num + sumOfParts rest
         else sumOfParts rest
 
-findGears :: [Number] -> [(Int, Int)]
-findGears numbers = do
-    let x = toList $ innerFindGears numbers empty
-    let y = snd <$> filter (\((c, _), nums) -> c == '*' && length nums == 2) x
-    listToTuple <$> y
+type Gear = (Int, Int)
 
-    where
-        listToTuple :: [a] -> (a, a)
-        listToTuple [f, s] = (f, s)
-        listToTuple _ = undefined
+toGearList :: [Number] -> [Gear]
+toGearList numbers = do
+    let gs = groupWith (snd . snd) $ concatMap toMappingList numbers
+    listToTuple <$> filter ((== 2) . length) gs
+  where
+    toMappingList :: Number -> [(Int, PositionedChar)]
+    toMappingList n = flip addFst n.num <$> filter (\(s, _) -> s == '*') n.surroundings
 
-        innerFindGears :: [Number] -> Map PositionedChar [Int] -> Map PositionedChar [Int]
-        innerFindGears [] m = m
-        innerFindGears allNumbers m = do
-            let numSur = fmap (\n -> (n.surroundings, n.num)) allNumbers
-            let func = innerInnerFindGears empty <$> (fst <$> numSur) <*> (snd <$> numSur)
-            unionsWith (<>) func
+    listToTuple :: [(Int, PositionedChar)] -> Gear
+    listToTuple [(a, _), (b, _)] = (a, b)
+    listToTuple _ = undefined
 
-            where
-                innerInnerFindGears :: Map PositionedChar [Int] -> [PositionedChar] -> Int -> Map PositionedChar [Int]
-                innerInnerFindGears innerMap (firstSur:surRest) n | fst firstSur == '*' = do
-                    let newM = case m !? firstSur of
-                            Just entry -> Data.Map.Strict.insert firstSur (n:entry) innerMap
-                            Nothing -> Data.Map.Strict.insert firstSur [n] innerMap
-                    innerInnerFindGears newM surRest n
-                innerInnerFindGears innerMap _ _ = innerMap
+productOfGear :: Gear -> Int
+productOfGear (a, b) = a * b
 
 main :: [String] -> String
 main rawInputs = do
@@ -124,5 +114,6 @@ main rawInputs = do
     let dimensionsY = trace (show $ length $ head inputs) $ length (head inputs)
     let positions = [(x, y) | y <- [0 .. dimensionsY - 1], x <- [0 .. dimensionsX - 1]]
     -- show $ sumOfParts $ parse charGrid positions
-    show $ findGears $ parse charGrid positions
+    show $ sum $ productOfGear <$> toGearList (parse charGrid positions)
+
 -- show $ parse charGrid positions

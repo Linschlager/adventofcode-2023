@@ -15,8 +15,7 @@ main = do
     let res = case day of
             1 -> Day1.main $ lines inputData
             2 -> Day2.main $ lines inputData
-            3 -> Day3.main Day3.exampleData
-            -- \$ lines inputData
+            3 -> Day3.main $ lines inputData
             _ -> undefined
 
     putStrLn $ "Day " <> show day <> " Result: " <> res
