@@ -6,6 +6,7 @@ module Internal.Prelude (
     module Data.List,
     betterStripPrefix,
     mapFst,
+    addFst,
 ) where
 
 import Data.Bifunctor qualified
@@ -18,3 +19,6 @@ betterStripPrefix prefix list = fromMaybe list $ stripPrefix prefix list
 
 mapFst :: (a -> c) -> [(a, b)] -> [(c, b)]
 mapFst f input = Data.Bifunctor.first f <$> input
+
+addFst :: b -> a -> (a, b)
+addFst b a = (a, b)
