@@ -1,6 +1,5 @@
 module AdventOfCode.Day5 where
 
-import Data.List.Split (splitOn)
 import Internal.Prelude
 
 type Seed = Int

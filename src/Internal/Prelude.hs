@@ -2,15 +2,19 @@
 
 module Internal.Prelude (
     module Prelude,
+    module Data.Char,
     module Data.Maybe,
     module Data.List,
+    module Data.List.Split,
     betterStripPrefix,
     mapFst,
     addFst,
 ) where
 
 import Data.Bifunctor qualified
+import Data.Char
 import Data.List
+import Data.List.Split (splitOn)
 import Data.Maybe
 import Prelude
 

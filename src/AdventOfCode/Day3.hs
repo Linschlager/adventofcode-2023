@@ -2,7 +2,6 @@
 
 module AdventOfCode.Day3 where
 
-import Data.Char
 import Data.Map.Strict hiding (filter, mapMaybe, null)
 import Debug.Trace
 import GHC.Exts (groupWith)

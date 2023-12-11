@@ -1,7 +1,6 @@
 module AdventOfCode.Day4 where
 
 import Data.List.Split
-import Debug.Trace
 import Internal.Prelude
 
 data Card = Card {winningNumbers :: [Int], givenNumbers :: [Int]}

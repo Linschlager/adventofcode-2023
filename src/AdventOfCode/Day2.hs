@@ -1,6 +1,5 @@
 module AdventOfCode.Day2 where
 
-import Data.List.Split
 import Internal.Prelude
 
 data Color = Blue | Red | Green
