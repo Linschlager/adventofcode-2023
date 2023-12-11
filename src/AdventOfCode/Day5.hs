@@ -45,7 +45,7 @@ parseAlmanac ls = parseCategory <$> splitOn [""] ls
 
 passSeedThroughCategory :: Seed -> AlmanacCategory -> Int
 passSeedThroughCategory seed category = do
-    let maybeNext = find (\mapEntry -> seed >= mapEntry.srcRangeStart && seed <= mapEntry.srcRangeStart + mapEntry.rangeLength) category
+    let maybeNext = find (\mapEntry -> seed >= mapEntry.srcRangeStart && seed < mapEntry.srcRangeStart + mapEntry.rangeLength) category
     case maybeNext of
         Just next -> seed - next.srcRangeStart + next.destRangeStart
         Nothing -> seed
